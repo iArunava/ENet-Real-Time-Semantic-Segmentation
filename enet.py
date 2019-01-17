@@ -1,7 +1,18 @@
 class ENet(nn.Module):
     
-    def __init__(self):
+    def __init__(self, C):
+        """
+        The constructor for the ENet function
+
+        C = The number of classes in the dataset
+        """
         
+        # Intializing the parent class
+        super().__init__()
+    
+        # Declaring the needed class variables
+        self.C = C
+
         self.i_conv = nn.Conv2d(in_channels = 3, 
                                 out_channels = 13, 
                                 kernel_size = 3,
@@ -202,9 +213,26 @@ class ENet(nn.Module):
         #######################################
         
         ########### B 5.0  ####################
+
+        self.conv1_5_0, self.prelu1_5_0, self.conv2_5_0, \
+        self.prelu2_5_0, self.conv3_5_0 = self.bottleneck(stage = 5,
+                                                            position = 0,
+                                                            flag = U)
+
         
-        
+        self.conv1_5_1, self.prelu1_5_0, self.conv2_5_0, \
+        self.prelu2_5_0, self.conv3_5_0 = self.bottleneck(stage = 5,
+                                                          position = 1,
+                                                          flag = R)
         #######################################
+
+        self.fullconv = nn.Conv2d(in_channels = 16,
+                                  out_channels = C,
+                                  kernel_size = 1,
+                                  stride = 1,
+                                  padding = 0,
+                                  bias = True)
+                                
         
     def forward(self, x):
         
