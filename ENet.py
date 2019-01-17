@@ -1,3 +1,13 @@
+#####################################################
+# Reproducing the paper                             #
+# ENet - Real Time Semantic Segmentation            #
+# Paper: https://arxiv.org/pdf/1606.02147.pdf       #
+#                                                   #
+# Anyone is allowed to modify this code with proper #
+# credits directing back to this repository.        #
+#####################################################
+
+
 class ENet(nn.Module):
     
     def __init__(self, C):
