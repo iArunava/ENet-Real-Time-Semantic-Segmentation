@@ -1,3 +1,15 @@
+###################################################
+# Copyright (c) 2019                              #
+# Authors: @iArunava <iarunavaofficial@gmail.com> #
+#          @AvivSham <mista2311@gmail.com>        #
+#                                                 #
+# License: BSD License 3.0                        #
+#                                                 #
+# The Code in this file is distributed for free   #
+# usage and modification with proper linkage back #
+# to this repository.                             #
+###################################################
+
 class UBNeck(nn.Module):
     def __init__(self, h, w, in_channels, out_channels, p=0.01):
         
