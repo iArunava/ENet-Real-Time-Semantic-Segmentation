@@ -1,3 +1,15 @@
+###################################################
+# Copyright (c) 2019                              #
+# Authors: @iArunava <iarunavaofficial@gmail.com> #
+#          @AvivSham <mista2311@gmail.com>        #
+#                                                 #
+# License: BSD License 3.0                        #
+#                                                 #
+# The Code in this file is distributed for free   #
+# usage and modification with proper linkage back #
+# to this repository.                             #
+###################################################
+
 class RDDNeck(nn.Module):
     def __init__(self, h, w, dilate, in_channels, out_channels, down_flag, p=0.1):
         
@@ -84,10 +96,9 @@ class RDDNeck(nn.Module):
         if self.in_channels != self.out_channels:
             out_shape = self.out_channels - self.in_channels
             extras = torch.zeros((bs, out_shape, x.shape[2], x.shape[3]))
-            print (x_copy.shape, extras.shape)
+            if torch.cuda.is_available:
+                extras = extras.cuda()
             x_copy = torch.cat((x_copy, extras), dim = 1)
-            
-        print (x_copy.shape)
         
         # Sum of main and side branches
         x = x + x_copy

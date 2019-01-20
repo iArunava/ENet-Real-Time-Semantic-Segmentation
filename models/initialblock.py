@@ -30,7 +30,7 @@ class InitialBlock(nn.Module):
         self.batchnorm = nn.BatchNorm2d(out_channels)
   
     def forward(self, x):
-        print (x.shape, type(x))
+        
         main = self.conv(x)
         main = self.batchnorm(main)
         main = self.prelu(main)

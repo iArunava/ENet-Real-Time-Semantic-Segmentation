@@ -21,8 +21,8 @@ class UBNeck(nn.Module):
         self.h = h
         self.w = w
         
-        self.unpool = nn.MaxUnpool2d(kernel_size = 2,
-                                        stride = 2)
+        self.unpool = nn.MaxUnpool2d(kernel_size = 2)
+        
         
         self.main_conv = nn.Conv2d(in_channels = self.in_channels,
                                            out_channels = self.out_channels,
@@ -36,6 +36,7 @@ class UBNeck(nn.Module):
                                padding = 0,
                                bias = False)
         
+        
         self.prelu1 = nn.PReLU()
         
         self.convt2 = nn.ConvTranspose2d(in_channels = self.out_channels,
@@ -43,6 +44,7 @@ class UBNeck(nn.Module):
                                   kernel_size = 3,
                                   stride = 2,
                                   padding = 1,
+                                  output_padding = 1,
                                   bias = True)
         
         self.prelu2 = nn.PReLU()
@@ -76,11 +78,10 @@ class UBNeck(nn.Module):
         
         # Main Branch
         
-        x_copy = self.unpool(x_copy, indices)
         x_copy = self.main_conv(x_copy)
+        x_copy = self.unpool(x_copy, indices, output_size=x.size())
         
         # Concat
-        
         x = x + x_copy
         x = self.prelu3(x)
         

@@ -1,31 +1,21 @@
-#####################################################
-# Reproducing the paper                             #
-# ENet - Real Time Semantic Segmentation            #
-# Paper: https://arxiv.org/pdf/1606.02147.pdf       #
-#                                                   #
-# Copyright (c) 2019                                #
-# Authors: @iArunava <iarunavaofficial@gmail.com>   #
-#          @AvivSham <mista2311@gmail.com>          #
-#                                                   #
-# License: BSD License 3.0                          #
-#                                                   #
-# The Code in this file is distributed for free     #
-# usage and modification with proper credits        #
-# directing back to this repository.                #
-#####################################################
+##################################################################
+# Reproducing the paper                                          #
+# ENet - Real Time Semantic Segmentation                         #
+# Paper: https://arxiv.org/pdf/1606.02147.pdf                    #
+#                                                                #
+# Copyright (c) 2019                                             #
+# Authors: @iArunava <iarunavaofficial@gmail.com>                #
+#          @AvivSham <mista2311@gmail.com>                       #
+#                                                                #
+# License: BSD License 3.0                                       #
+#                                                                #
+# The Code in this file is distributed for free                  #
+# usage and modification with proper credits                     #
+# directing back to this repository.                             #
+##################################################################
 
 class ENet(nn.Module):
-
     def __init__(self, C):
-        """
-        This is the constructor class of ENet
-
-        Arguments:
-
-        C - int - The number of total number of classes 
-                  that are present in the dataset.
-        """
-
         super().__init__()
         
         # Define class variables
@@ -62,26 +52,19 @@ class ENet(nn.Module):
         self.b41 = RDDNeck(128, 128, 1, 64, 64, False)
         self.b42 = RDDNeck(128, 128, 1, 64, 64, False)
         
-        self.b51 = UBNeck(128, 128, 64, 16)
-        self.b52 = RDDNeck(256, 256, 1, 16, 16, False)
+        self.b50 = UBNeck(128, 128, 64, 16)
+        self.b51 = RDDNeck(256, 256, 1, 16, 16, False)
         
-        self.fullconv = nn.Conv2d(16, self.C, 1)
+        self.fullconv = nn.ConvTranspose2d(in_channels=16, 
+                                           out_channels=self.C, 
+                                           kernel_size=3, 
+                                           stride=2, 
+                                           padding=1, 
+                                           output_padding=1)
         
+        self.sigmoid = nn.Sigmoid()
         
     def forward(self, x):
-        """
-        The function that defines the forward pass through the ENet
-
-        Arguments:
-
-        x - torch.tensor - The input to the network
-                           The input is assumed to be in shape [N, C, H, W]
-                           where,
-                           N - The Batch size
-                           C - The number of channels (ususally 3)
-                           H - The height dimension of the tensor
-                           W - The width dimension of the tensor
-        """
         
         x = self.init(x)
         
@@ -118,5 +101,6 @@ class ENet(nn.Module):
         x = self.b51(x)
         
         x = self.fullconv(x)
+        x = self.sigmoid(x)
         
         return x
