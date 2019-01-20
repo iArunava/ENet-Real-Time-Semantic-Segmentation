@@ -39,3 +39,54 @@ def create_class_mask(img, color_map, is_normalized_img=True, is_normalized_map=
         mask.append(np.uint8((color_img == img).sum(axis = -1) == 3))
 
     return np.array(mask)
+
+
+def loader(training_path, segmented_path, batch_size):
+	"""
+    The Loader to generate inputs and labels from the Image and Segmented Directory
+
+    Arguments:
+
+    training_path - str - Path to the directory that contains the training images
+
+    segmented_path - str - Path to the directory that contains the segmented images
+
+    batch_size - int - the batch size
+
+    yields inputs and labels of the batch size
+	"""
+
+    filenames_t = os.listdir(training_path)
+    total_files_t = len(filenames_t)
+    
+    filenames_s = os.listdir(segmented_path)
+    total_files_s = len(filenames_s)
+    
+    assert(total_files_t == total_files_s)
+    
+    iterations = (total_files_t // batch_size) + 1 if total_files_t % batch_size != 0 else (total_files_t // batch_size)
+    idx = 0
+    for ii in range(iterations):
+        new_idx = idx + batch_size if idx+batch_size < total_files_t else total_files_t
+        inputs = []
+        labels = []
+        
+        for jj in range(idx, new_idx):
+            img = plt.imread(training_path + filenames_t[jj])
+            img = cv2.resize(img, (512, 512), cv2.INTER_CUBIC)
+            inputs.append(img)
+            
+            img = cv2.imread(segmented_path + filenames_s[jj])
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            img = cv2.resize(img, (512, 512), cv2.INTER_NEAREST)
+            mask = create_mask(img, color_map)
+            labels.append(mask)
+         
+        inputs = np.stack(inputs, axis=2)
+        inputs = torch.tensor(inputs).transpose(0, 2).transpose(1, 3)
+        
+        labels = torch.tensor(labels)
+        
+        yield inputs, labels
+        
+        idx = new_idx
