@@ -1,5 +1,6 @@
 import numpy as np
 import argparse
+from infer import *
 
 color_map = {
     'unlabeled'     : (  0,  0,  0),
@@ -125,8 +126,9 @@ if __name__ == '__main__':
                         default=False,
                         help='Whether to use cuda or not')
 
-    parser.add_argument('--mode'
+    parser.add_argument('--mode',
                         choices=['train', 'test'],
+                        default='train',
                         help='Whether to train or test')
     
     FLAGS, unparsed = parser.parse_known_args()

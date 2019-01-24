@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
+import os
 
 def create_class_mask(img, color_map, is_normalized_img=True, is_normalized_map=False, show_masks=False):
     """
@@ -20,7 +21,7 @@ def create_class_mask(img, color_map, is_normalized_img=True, is_normalized_map=
 
     show_masks = Wherether to show the created masks or not
     """
-    
+
     if is_normalized_img and (not is_normalized_map):
         img *= 255
 
@@ -42,7 +43,7 @@ def create_class_mask(img, color_map, is_normalized_img=True, is_normalized_map=
 
 
 def loader(training_path, segmented_path, batch_size):
-	"""
+    """
     The Loader to generate inputs and labels from the Image and Segmented Directory
 
     Arguments:
@@ -54,7 +55,7 @@ def loader(training_path, segmented_path, batch_size):
     batch_size - int - the batch size
 
     yields inputs and labels of the batch size
-	"""
+    """
 
     filenames_t = os.listdir(training_path)
     total_files_t = len(filenames_t)
@@ -94,7 +95,7 @@ def loader(training_path, segmented_path, batch_size):
 
 
 def decode_segmap(image):
-	Sky = [128, 128, 128]
+    Sky = [128, 128, 128]
     Building = [128, 0, 0]
     Pole = [192, 192, 128]
     Road_marking = [255, 69, 0]
@@ -111,21 +112,21 @@ def decode_segmap(image):
                               Pavement, Tree, SignSymbol, Fence, Car, 
                               Pedestrian, Bicyclist]).astype(np.uint8)
 
-	r = np.zeros_like(image).astype(np.uint8)
-	g = np.zeros_like(image).astype(np.uint8)
-	b = np.zeros_like(image).astype(np.uint8)
+    r = np.zeros_like(image).astype(np.uint8)
+    g = np.zeros_like(image).astype(np.uint8)
+    b = np.zeros_like(image).astype(np.uint8)
 
-	for label in range(len(label_colors)):
-		r[image == label] = label_colors[l, 0]
-		g[image == label] = label_colors[l, 1]
-		b[image == label] = label_colors[l, 2]
+    for label in range(len(label_colors)):
+            r[image == label] = label_colors[l, 0]
+            g[image == label] = label_colors[l, 1]
+            b[image == label] = label_colors[l, 2]
 
-	rgb = np.zeros((image.shape[0], image.shape[1], 3)).astype(np.uint8)
-	rgb[:, :, 0] = b
-	rgb[:, :, 1] = g
-	rgb[:, :, 2] = r
+    rgb = np.zeros((image.shape[0], image.shape[1], 3)).astype(np.uint8)
+    rgb[:, :, 0] = b
+    rgb[:, :, 1] = g
+    rgb[:, :, 2] = r
 
-	return rgb
+    return rgb
 
 def show3(img1, img2, img3, in_row=True):
 	'''
@@ -150,10 +151,10 @@ def show3(img1, img2, img3, in_row=True):
 	plt.show()
 
 def get_class_weights(loader, num_classes, c=1.02):
-	'''
-	This class return the class weights for each class
-	
-	Arguments:
+    '''
+    This class return the class weights for each class
+    
+    Arguments:
     - loader : The generator object which return all the labels at one iteration
                Do Note: That this class expects all the labels to be returned in
                one iteration
@@ -163,7 +164,7 @@ def get_class_weights(loader, num_classes, c=1.02):
     Return:
     - class_weights : An array equal in length to the number of classes
                       containing the class weights for each class
-	'''
+    '''
 
     _, labels = next(loader)
     all_labels = labels.flatten()
