@@ -1,66 +1,60 @@
-###################################################
-# Copyright (c) 2019                              #
-# Authors: @iArunava <iarunavaofficial@gmail.com> #
-#          @AvivSham <mista2311@gmail.com>        #
-#                                                 #
-# License: BSD License 3.0                        #
-#                                                 #
-# The Code in this file is distributed for free   #
-# usage and modification with proper linkage back #
-# to this repository.                             #
-###################################################
-
 class UBNeck(nn.Module):
-    def __init__(self, h, w, in_channels, out_channels, p=0.01):
+    def __init__(self, in_channels, out_channels, relu=False, projection_ratio=4):
         
         super().__init__()
         
         # Define class variables
         self.in_channels = in_channels
+        self.reduced_depth = int(in_channels / projection_ratio)
         self.out_channels = out_channels
-        self.h = h
-        self.w = w
         
-        self.unpool = nn.MaxUnpool2d(kernel_size = 2)
         
+        if relu:
+            activation = nn.ReLU()
+        else:
+            activation = nn.PReLU()
+        
+        self.unpool = nn.MaxUnpool2d(kernel_size = 2,
+                                     stride = 2)
         
         self.main_conv = nn.Conv2d(in_channels = self.in_channels,
-                                           out_channels = self.out_channels,
-                                           kernel_size = 1)
+                                    out_channels = self.out_channels,
+                                    kernel_size = 1)
         
-        self.dropout = nn.Dropout2d(p=p)
+        self.dropout = nn.Dropout2d(p=0.1)
         
         self.convt1 = nn.ConvTranspose2d(in_channels = self.in_channels,
-                               out_channels = self.out_channels,
+                               out_channels = self.reduced_depth,
                                kernel_size = 1,
                                padding = 0,
                                bias = False)
         
         
-        self.prelu1 = nn.PReLU()
+        self.prelu1 = activation
         
-        self.convt2 = nn.ConvTranspose2d(in_channels = self.out_channels,
-                                  out_channels = self.out_channels,
+        self.convt2 = nn.ConvTranspose2d(in_channels = self.reduced_depth,
+                                  out_channels = self.reduced_depth,
                                   kernel_size = 3,
                                   stride = 2,
                                   padding = 1,
                                   output_padding = 1,
-                                  bias = True)
+                                  bias = False)
         
-        self.prelu2 = nn.PReLU()
+        self.prelu2 = activation
         
-        self.convt3 = nn.ConvTranspose2d(in_channels = self.out_channels,
+        self.convt3 = nn.ConvTranspose2d(in_channels = self.reduced_depth,
                                   out_channels = self.out_channels,
                                   kernel_size = 1,
                                   padding = 0,
                                   bias = False)
         
-        self.prelu3 = nn.PReLU()
+        self.prelu3 = activation
         
-        self.batchnorm = nn.BatchNorm2d(self.out_channels)
+        self.batchnorm = nn.BatchNorm2d(self.reduced_depth)
+        self.batchnorm2 = nn.BatchNorm2d(self.out_channels)
         
     def forward(self, x, indices):
-        x_copy = x.clone()
+        x_copy = x
         
         # Side Branch
         x = self.convt1(x)
@@ -72,7 +66,7 @@ class UBNeck(nn.Module):
         x = self.prelu2(x)
         
         x = self.convt3(x)
-        x = self.batchnorm(x)
+        x = self.batchnorm2(x)
         
         x = self.dropout(x)
         

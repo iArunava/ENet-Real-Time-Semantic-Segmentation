@@ -25,7 +25,7 @@ class InitialBlock(nn.Module):
                                 stride = 2, 
                                 padding = 1)
 
-        self.prelu = nn.PReLU()
+        self.prelu = nn.PReLU(16)
 
         self.batchnorm = nn.BatchNorm2d(out_channels)
   
@@ -33,10 +33,10 @@ class InitialBlock(nn.Module):
         
         main = self.conv(x)
         main = self.batchnorm(main)
-        main = self.prelu(main)
         
         side = self.maxpool(x)
         
         x = torch.cat((main, side), dim=1)
+        x = self.prelu(x)
         
         return x
