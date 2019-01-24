@@ -148,3 +148,26 @@ def show3(img1, img2, img3, in_row=True):
 	plt.axis('off')
 	plt.imshow(img3)
 	plt.show()
+
+def get_class_weights(loader, num_classes, c=1.02):
+	'''
+	This class return the class weights for each class
+	
+	Arguments:
+    - loader : The generator object which return all the labels at one iteration
+               Do Note: That this class expects all the labels to be returned in
+               one iteration
+
+    - num_classes : The number of classes
+
+    Return:
+    - class_weights : An array equal in length to the number of classes
+                      containing the class weights for each class
+	'''
+
+    _, labels = next(loader)
+    all_labels = labels.flatten()
+    each_class = np.bincount(all_labels, minlength=num_classes)
+    prospensity_score = each_class / len(all_labels)
+    class_weights = 1 / (np.log(c + prospensity_score))
+    return class_weights
