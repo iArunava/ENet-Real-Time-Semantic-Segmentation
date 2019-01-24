@@ -1,4 +1,5 @@
 import numpy as np
+import argparse
 
 color_map = {
     'unlabeled'     : (  0,  0,  0),
@@ -31,3 +32,29 @@ color_map = {
     'motorcycle'    : (  0,  0,230),
     'bicycle'       : (119, 11, 32)
 }
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('-m', '--model-path',
+                        type=str,
+                        default='./datasets/CamVid/ckpt-camvid-enet.py',
+                        help='The path to the pretrained enet model')
+
+    parser.add_argument('-i', '--image-path',
+                        type=str,
+                        help='The path to the image to perform semantic segmentation')
+
+    parser.add_argument('--mode'
+                        choices=['train', 'test'],
+                        help='Whether to train or test')
+    
+    FLAGS, unparsed = parser.parse_known_args()
+
+    if FLAGS.mode.lower() == 'train':
+        train(FLAGS)
+    elif FLAGS.mode.lower() == 'test':
+        test(FLAGS)
+    else:
+        raise RuntimeError('Unknown mode passed. \n Mode passed should be either \
+                            of "train" or "test"')
