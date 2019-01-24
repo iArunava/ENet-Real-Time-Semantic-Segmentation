@@ -2,6 +2,8 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 import os
+from PIL import Image
+import torch
 
 def create_class_mask(img, color_map, is_normalized_img=True, is_normalized_map=False, show_masks=False):
     """
@@ -42,7 +44,7 @@ def create_class_mask(img, color_map, is_normalized_img=True, is_normalized_map=
     return np.array(mask)
 
 
-def loader(training_path, segmented_path, batch_size):
+def loader(training_path, segmented_path, batch_size, h=512, w=512):
     """
     The Loader to generate inputs and labels from the Image and Segmented Directory
 
@@ -117,38 +119,34 @@ def decode_segmap(image):
     b = np.zeros_like(image).astype(np.uint8)
 
     for label in range(len(label_colors)):
-            r[image == label] = label_colors[l, 0]
-            g[image == label] = label_colors[l, 1]
-            b[image == label] = label_colors[l, 2]
+            r[image == label] = label_colors[label, 0]
+            g[image == label] = label_colors[label, 1]
+            b[image == label] = label_colors[label, 2]
 
     rgb = np.zeros((image.shape[0], image.shape[1], 3)).astype(np.uint8)
-    rgb[:, :, 0] = b
+    rgb[:, :, 0] = r
     rgb[:, :, 1] = g
-    rgb[:, :, 2] = r
+    rgb[:, :, 2] = b
 
     return rgb
 
-def show3(img1, img2, img3, in_row=True):
-	'''
-	Helper function to show 3 images
-	'''
-	if not in_row:
-		rc_tuple = (3, 1)
+def show_images(images, in_row=True):
+    '''
+    Helper function to show 3 images
+    '''
+    total_images = len(images)
 
-	figure = plt.figure(figsize=(20, 10))
-	plt.subplot(*rc_tuple, 1)
-	plt.title('Input Image')
-	plt.axis('off')
-	plt.imshow(img1)
-	plt.subplot(*rc_tuple, 2)
-	plt.title('Predicted Segmentation')
-	plt.axis('off')
-	plt.imshow(img2)
-	plt.subplot(*rc_tuple, 3)
-	plt.title('Ground Truth')
-	plt.axis('off')
-	plt.imshow(img3)
-	plt.show()
+    rc_tuple = (1, total_images)
+    if not in_row:
+        rc_tuple = (total_images, 1)
+    
+	#figure = plt.figure(figsize=(20, 10))
+    for ii in range(len(images)):
+        plt.subplot(*rc_tuple, ii+1)
+        plt.title(images[ii][0])
+        plt.axis('off')
+        plt.imshow(images[ii][1])
+    plt.show()
 
 def get_class_weights(loader, num_classes, c=1.02):
     '''

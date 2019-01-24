@@ -14,6 +14,13 @@
 # directing back to this repository.                             #
 ##################################################################
 
+import torch
+import torch.nn as nn
+from .InitialBlock import InitialBlock
+from .RDDNeck import RDDNeck
+from .UBNeck import UBNeck
+from .ASNeck import ASNeck
+
 class ENet(nn.Module):
     def __init__(self, C):
         super().__init__()

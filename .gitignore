@@ -1,3 +1,6 @@
+*.png
+*.jpg
+*.zip
 *.swp
 
 # Byte-compiled / optimized / DLL files

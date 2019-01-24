@@ -1,6 +1,7 @@
 import numpy as np
 import argparse
-from infer import *
+from train import *
+from test import *
 
 color_map = {
     'unlabeled'     : (  0,  0,  0),
@@ -37,7 +38,7 @@ color_map = {
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-m', '--model-path',
+    parser.add_argument('-m',
                         type=str,
                         default='./datasets/CamVid/ckpt-camvid-enet.pth',
                         help='The path to the pretrained enet model')
@@ -45,6 +46,16 @@ if __name__ == '__main__':
     parser.add_argument('-i', '--image-path',
                         type=str,
                         help='The path to the image to perform semantic segmentation')
+
+    parser.add_argument('-rh', '--resize-height',
+                        type=int,
+                        default=512,
+                        help='The height for the resized image')
+
+    parser.add_argument('-rw', '--resize-width',
+                        type=int,
+                        default=512,
+                        help='The width for the resized image')
 
     parser.add_argument('-lr', '--learning-rate',
                         type=float,
@@ -88,7 +99,7 @@ if __name__ == '__main__':
 
     parser.add_argument('-lptr', '--label-path-train',
                         type=str,
-                        default='./datasets/CamVid/trainanot/',
+                        default='./datasets/CamVid/trainannot/',
                         help='The path to the label dataset')
 
     parser.add_argument('-ipv', '--input-path-val',
@@ -98,7 +109,7 @@ if __name__ == '__main__':
 
     parser.add_argument('-lpv', '--label-path-val',
                         type=str,
-                        default='./datasets/CamVid/valanot/',
+                        default='./datasets/CamVid/valannot/',
                         help='The path to the label dataset')
 
     parser.add_argument('-iptt', '--input-path-test',
@@ -108,7 +119,7 @@ if __name__ == '__main__':
 
     parser.add_argument('-lptt', '--label-path-test',
                         type=str,
-                        default='./datasets/CamVid/testanot/',
+                        default='./datasets/CamVid/testannot/',
                         help='The path to the label dataset')
 
     parser.add_argument('-pe', '--print-every',
@@ -132,6 +143,9 @@ if __name__ == '__main__':
                         help='Whether to train or test')
     
     FLAGS, unparsed = parser.parse_known_args()
+
+    FLAGS.cuda = torch.device('cuda:0' if torch.cuda.is_available() and FLAGS.cuda \
+                               else 'cpu')
 
     if FLAGS.mode.lower() == 'train':
         train(FLAGS)

@@ -1,9 +1,14 @@
+import torch
+import torch.nn as nn
 from utils import *
+from models.ENet import ENet
+import sys
+from tqdm import tqdm
 
 def train(FLAGS):
 
     # Defining the hyperparameters
-    cuda =  FLAGS.cuda
+    device =  FLAGS.cuda
     batch_size = FLAGS.batch_size
     epochs = FLAGS.epochs
     lr = FLAGS.learning_rate
@@ -63,8 +68,7 @@ def train(FLAGS):
             
             #assert (X_batch >= 0. and X_batch <= 1.0).all()
             
-            if cuda:
-                X_batch, mask_batch = X_batch.cuda(), mask_batch.cuda()
+            X_batch, mask_batch = X_batch.to(device), mask_batch.to(device)
 
             optimizer.zero_grad()
 
@@ -97,8 +101,10 @@ def train(FLAGS):
                     out = enet(inputs)
                     out = out.data.max(1)[1]
                     
-                    eval_loss += (labels.long() - out.long()).sum()
-                    
+                    loss = criterion(out, labels.long())
+
+                    eval_loss += loss.item()
+
                 print ()
                 print ('Loss {:6f}'.format(eval_loss))
                 
@@ -109,7 +115,7 @@ def train(FLAGS):
                 'epochs' : e,
                 'state_dict' : enet.state_dict()
             }
-            torch.save(checkpoint, '/content/ckpt-enet-{}-{}.pth'.format(e, train_loss))
+            torch.save(checkpoint, './ckpt-enet-{}-{}.pth'.format(e, train_loss))
             print ('Model saved!')
 
         print ('Epoch {}/{}...'.format(e+1, epochs),

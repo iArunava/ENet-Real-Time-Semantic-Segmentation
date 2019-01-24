@@ -10,6 +10,9 @@
 # to this repository.                             #
 ###################################################
 
+import torch
+import torch.nn as nn
+
 class InitialBlock(nn.Module):
     def __init__ (self,in_channels = 3,out_channels = 13):
         super().__init__()
