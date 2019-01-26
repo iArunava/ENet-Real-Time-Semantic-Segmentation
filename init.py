@@ -129,7 +129,7 @@ if __name__ == '__main__':
 
     parser.add_argument('-ee', '--eval-every',
                         type=int,
-                        default=1,
+                        default=10,
                         help='The number of epochs after which to print the validation loss')
 
     parser.add_argument('--cuda',
