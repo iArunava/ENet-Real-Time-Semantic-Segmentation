@@ -43,6 +43,36 @@ python3 init.py --help
 ![enet infer 5](https://user-images.githubusercontent.com/26242097/51782353-c3ef9400-214c-11e9-8c66-276795c83f08.png)
 ![enet infer 2](https://user-images.githubusercontent.com/26242097/51782324-6b1ffb80-214c-11e9-9f92-741954699f4d.png)
 
+## Pretrained models
+
+We plan to open source more pretrained models which are better.<br/>
+For now, we have only open sourced one pretrained model, which is trained on CamVid dataset.<br/>
+Find it here: [Pretrained ENet on CamVid](https://github.com/iArunava/ENet-Real-Time-Semantic-Segmentation/blob/master/datasets/CamVid/ckpt-enet.pth)
+
+
+## Citations
+
+```
+@inproceedings{ BrostowSFC:ECCV08,
+  author    = {Gabriel J. Brostow and Jamie Shotton and Julien Fauqueur and Roberto Cipolla},
+  title     = {Segmentation and Recognition Using Structure from Motion Point Clouds},
+  booktitle = {ECCV (1)},
+  year      = {2008},
+  pages     = {44-57}
+}
+
+@article{ BrostowFC:PRL2008,
+    author = "Gabriel J. Brostow and Julien Fauqueur and Roberto Cipolla",
+    title = "Semantic Object Classes in Video: A High-Definition Ground Truth Database",
+    journal = "Pattern Recognition Letters",
+    volume = "xx",
+    number = "x",   
+    pages = "xx-xx",
+    year = "2008"
+}
+
+```
+
 ## License
 
 The code in this repository is distributed under the BSD v3 Licemse.<br/>
