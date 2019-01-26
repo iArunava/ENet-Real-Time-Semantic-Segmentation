@@ -1,4 +1,4 @@
-# ENet-Real-Time-Semantic-Segmentation
+# ENet - Real Time Semantic Segmentation
 
 A Neural Net Architecture for real time Semantic Segmentation. <br/>
 In this repository we have reproduced the ENet Paper - Which can be used on
