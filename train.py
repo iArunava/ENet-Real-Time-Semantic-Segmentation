@@ -32,6 +32,9 @@ def train(FLAGS):
     # Get an instance of the model
     enet = ENet(nc)
     print ('[INFO]Model Instantiated!')
+    
+    # Move the model to cuda if available
+    enet = enet.to(device)
 
     # Define the criterion and the optimizer
     criterion = nn.CrossEntropyLoss(weight=torch.FloatTensor(class_weights).to(device))
