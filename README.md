@@ -6,17 +6,42 @@ mobile devices for real time semantic segmentattion. The link to the paper can b
 
 ## How to use?
 
+0. This repository comes in with a handy notebook which you can use with Colab. <br/>
+You can find a link to the notebook here: [
+ENet - Real Time Semantic Segmentation](https://github.com/iArunava/ENet-Real-Time-Semantic-Segmentation/blob/master/ENet-Real%20Time%20Semantic%20Segmentation.ipynb) <br/>
+Open it in colab: [Open in Colab](https://colab.research.google.com/github/iArunava/ENet-Real-Time-Semantic-Segmentation/blob/master/ENet-Real%20Time%20Semantic%20Segmentation.ipynb)
+
+---
+
+
 0. Clone the repository and cd into it
 ```
 git clone https://github.com/iArunava/ENet-Real-Time-Semantic-Segmentation.git
 cd ENet-Real-Time-Semantic-Segmentation/
 ```
 
-1. 
+1. Use this command to train the model
+```
+python3 init.py --mode train -iptr path/to/train/input/set/ -lptr /path/to/label/set/ --cuda False
+```
 
-## Some command line calls
+2. Use this command to test the model
+```
+python3 init.py --mode test -m /path/to/the/pretrained/model.pth -i /path/to/image/to/infer.png
+```
+
+3. Use `--help` to get more commands
+```
+python3 init.py --help
+```
 
 ## Some results
+
+![enet infer 1](https://user-images.githubusercontent.com/26242097/51782315-4b88d300-214c-11e9-9c92-3444c6582a80.png)
+![enet infer 4](https://user-images.githubusercontent.com/26242097/51782341-a02c4e00-214c-11e9-8566-f2092ddad086.png)
+![enet infer 6](https://user-images.githubusercontent.com/26242097/51782371-01542180-214d-11e9-80b8-55807f83f776.png)
+![enet infer 5](https://user-images.githubusercontent.com/26242097/51782353-c3ef9400-214c-11e9-8c66-276795c83f08.png)
+![enet infer 2](https://user-images.githubusercontent.com/26242097/51782324-6b1ffb80-214c-11e9-9f92-741954699f4d.png)
 
 ## License
 
