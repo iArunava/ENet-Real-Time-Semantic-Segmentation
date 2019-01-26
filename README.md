@@ -49,6 +49,11 @@ We plan to open source more pretrained models which are better.<br/>
 For now, we have only open sourced one pretrained model, which is trained on CamVid dataset.<br/>
 Find it here: [Pretrained ENet on CamVid](https://github.com/iArunava/ENet-Real-Time-Semantic-Segmentation/blob/master/datasets/CamVid/ckpt-enet.pth)
 
+## References
+1. A. Paszke, A. Chaurasia, S. Kim, and E. Culurciello.
+Enet: A deep neural network architecture
+for real-time semantic segmentation. arXiv preprint
+arXiv:1606.02147, 2016.
 
 ## Citations
 
@@ -70,7 +75,6 @@ Find it here: [Pretrained ENet on CamVid](https://github.com/iArunava/ENet-Real-
     pages = "xx-xx",
     year = "2008"
 }
-
 ```
 
 ## License
