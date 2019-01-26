@@ -102,7 +102,6 @@ def train(FLAGS):
 
                     inputs, labels = inputs.to(device), labels.to(device)
                     out = enet(inputs)
-                    out = out.data.max(1)[1]
                     
                     loss = criterion(out, labels.long())
 
