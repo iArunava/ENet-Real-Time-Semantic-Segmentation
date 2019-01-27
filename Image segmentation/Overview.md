@@ -16,6 +16,7 @@ methods to select the threshold value: Otsu, K-means clustering and maximum entr
 
 ![alt-text](https://www.decodedscience.org/wp-content/uploads/2011/07/image-thresholding-300x165.jpg)
 
+
 * **Motion and interactive segmentation** - this technique is based on motion in the image to perform the segmentation.
 The idea is intuitive, check the differences between pair of images assuming the object is moving, the difference will be exactly that object.
 
@@ -35,25 +36,30 @@ It has won the Grand Challenge for Computer-Automated Detection of Caries in Bit
 
 ![alt text](https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/u-net-architecture.png)
 
+
 **SegNet** - SegNet is assembled from encoders and decoders but without fully connected layers.
 SegNet is a fully convolutional network (FCN) with 13 VGG16 convolutional layers.
 
 ![alt-text](https://saytosid.github.io/images/segnet/Complete%20architecture.png)
+
 
 **Mask R-CNN** - Faster R-CNN uses a CNN feature extractor to extract image features. Then it uses a CNN region proposal network to create region of interests (RoIs). We apply RoI pooling to warp them into fixed dimension. 
 It is then feed into fully connected layers to make classification and boundary box prediction.
 
 ![alt-text](https://cdn-images-1.medium.com/max/1250/1*0cxB2pAxQ0A7AhTl-YT2JQ.jpeg)
 
+
 **Full-Resolution Residual Networks (FRRN)** - FRRN uses additional processing steps
 must be performed in order to obtain pixel-accurate segmentation masks at the full image resolution.
 
 ![alt-text](https://cdn-images-1.medium.com/max/1000/1*LlYK2Pjemx3kNC61yVV-yA.png)
 
+
 **Pyramid Scene Parsing Network (PSPNet)** - Full-Resolution Residual Networks were really  computationally intensive and using them on full scale photos was really slow.
 In order to deal with this problem PSPNet applies 4 different max pooling operation with 4 different window sizes and strides. Using the max pooling layers able to extract feature information from different scales much more efficiently.
 
 ![alt-text](https://cdn-images-1.medium.com/max/1000/1*REgHs3PeemO3TIuyE46iRg.png)
+
 
 **DeepLabv3+** - former networks are able to encode multi scale contextual information by using filters and pooling operations in different rates.
 newer networks can capture sharper object boundaries by recovering the spatial information. DeepLabv3+ combines these two approaches.
