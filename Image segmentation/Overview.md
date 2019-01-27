@@ -91,7 +91,7 @@ First the results weren't that good and we wanted to make the model more accurat
 
 You can open the notebook at this [link](https://github.com/iArunava/ENet-Real-Time-Semantic-Segmentation/blob/master/ENet-Real%20Time%20Semantic%20Segmentation.ipynb) view more results and also run the notebook to train the model. No downloads needed just run and enjoy!
 
-If you liked it, don't forget to clap, star and fork the project!
+**If you liked it, don't forget to clap, star and fork the project!**
 
 https://github.com/iArunava/ENet-Real-Time-Semantic-Segmentation
 
