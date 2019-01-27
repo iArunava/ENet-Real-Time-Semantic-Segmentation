@@ -1,3 +1,10 @@
+## ENet model implementation
+In this blog I will present an overview on image segmentation and the reproduction of ENet paper.
+
+Link to the paper: https://arxiv.org/pdf/1606.02147.pdf 
+
+Link to the repository: https://github.com/iArunava/ENet-Real-Time-Semantic-Segmentation
+
 ### Image Segmentation Overview
 ---
 In computer vision, image segmentation is the process of partitioning a digital image into multiple segments (sets of pixels, also known as super-pixels). The goal of segmentation is to simplify and/or change the representation of an image into something that is more meaningful and easier to analyze. 
@@ -66,4 +73,25 @@ newer networks can capture sharper object boundaries by recovering the spatial i
 DeepLabv3+ uses both encoder decoder and spatial pyramid pooling modules.
 
 ![alt-text](https://cdn-images-1.medium.com/max/1000/1*MFchBd4c8ZEgE3qtbnTznw.png)
+
+### ENet Implementation
+----
+In the last two week I have teamed up with Arunava and we implemented ENet model. 
+During this time we learned a lot and also encountered many difficulties which we overcame.
+At first we went over the article and studied it in depth, we took notes about the article and looked for data sets that could be used by us to train and validate the model that was built. We found that if you are using `plt.imread()` the loaded images are been normalized automatically. In order to make the training efficient we defined our custom data loader.
+First the results weren't that good and we wanted to make the model more accurate so we also wrote a function which calculates the weights of the classes (as used in the paper). 
+
+#### Results
+----
+![enet infer 1](https://user-images.githubusercontent.com/26242097/51782315-4b88d300-214c-11e9-9c92-3444c6582a80.png)
+![enet infer 4](https://user-images.githubusercontent.com/26242097/51782341-a02c4e00-214c-11e9-8566-f2092ddad086.png)
+![enet infer 6](https://user-images.githubusercontent.com/26242097/51782371-01542180-214d-11e9-80b8-55807f83f776.png)
+![enet infer 5](https://user-images.githubusercontent.com/26242097/51782353-c3ef9400-214c-11e9-8c66-276795c83f08.png)
+![enet infer 2](https://user-images.githubusercontent.com/26242097/51782324-6b1ffb80-214c-11e9-9f92-741954699f4d.png)
+
+You can open the notebook at this [link](https://github.com/iArunava/ENet-Real-Time-Semantic-Segmentation/blob/master/ENet-Real%20Time%20Semantic%20Segmentation.ipynb) view more results and also run the notebook to train the model. No downloads needed just run and enjoy!
+
+If you liked it, don't forget to clap, star and fork the project!
+
+https://github.com/iArunava/ENet-Real-Time-Semantic-Segmentation
 
