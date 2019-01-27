@@ -112,7 +112,7 @@ For the regularizer they use Spatial Dropout:
 ![enet infer 5](https://user-images.githubusercontent.com/26242097/51782353-c3ef9400-214c-11e9-8c66-276795c83f08.png)
 ![enet infer 2](https://user-images.githubusercontent.com/26242097/51782324-6b1ffb80-214c-11e9-9f92-741954699f4d.png)
 
-You can open the notebook at this [link](https://github.com/iArunava/ENet-Real-Time-Semantic-Segmentation/blob/master/ENet-Real%20Time%20Semantic%20Segmentation.ipynb) view more results and also run the notebook to train the model. No downloads needed just run and enjoy!
+If you want to train ENet model and reproduce the results in one go you can open the notebook at this [link](https://github.com/iArunava/ENet-Real-Time-Semantic-Segmentation/blob/master/ENet-Real%20Time%20Semantic%20Segmentation.ipynb) and run it. **No downloads needed just run and enjoy!**
 
 **If you liked it, don't forget to clap, star and fork the project!**
 
