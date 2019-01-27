@@ -76,12 +76,35 @@ DeepLabv3+ uses both encoder decoder and spatial pyramid pooling modules.
 
 ### ENet Implementation
 ----
-In the last two week I have teamed up with Arunava and we implemented ENet model. 
-During this time we learned a lot and also encountered many difficulties which we overcame.
-At first we went over the article and studied it in depth, we took notes about the article and looked for data sets that could be used to train and validate the model that was built. We found that if you are using `plt.imread()` the loaded images are been normalized automatically. In order to make the training efficient we defined our custom data loader.
-First the results weren't that good and we wanted to make the model more accurate so we also wrote a function which calculates the weights of the classes (as used in the paper). 
+ENet (Efficient Neural Network) gives the ability to perform pixel-wise semantic segmentation in real-time. ENet is upto 18x faster, requires 75x less FLOPs, has 79x less parameters and provides similar or better accuracy to existing models (according to 2016). Tested on CamVid, CityScapes and SUN datasets.
 
-#### Results
+![model architechture](https://cdn-images-1.medium.com/max/1000/1*CKuZqyLSc4U8BjG3sWZHew.png)
+
+The model architechture consists of inital block and five bottlenecks. The first three bottlenecks are used for encoding the input image and the other two for decoding it.
+
+Each bottleneck module consists of:
+- 1x1 projection that reduces the dimensionality
+- A main convolution layer (`conv`) (either — regular, dilated or full) (3x3)
+- 1x1 expansion
+- and they place Batch Normalization and PReLU between all convolutional layers.
+
+If the bottleneck is downsampling, a max pooling layer is added to the main branch. Also, the first 1x1 projection is replaced with 2x2 convolution with stride=2.
+
+They zero pad the activations to match the number of feature maps.
+
+The conv is sometimes asymmetric convolution i.e. a sequence of 5 * 1 and 1 * 5 convolutions.
+
+For the regularizer they use Spatial Dropout:
+- with p = 0.01 before bottleneck2.0
+- with p = 0.1 afterwards
+
+
+![bottleneck](https://cdn-images-1.medium.com/max/2600/1*RWYNKupbSTFFTOU7_7-sAg.png)
+
+
+
+
+#### Enet model Results
 ----
 ![enet infer 1](https://user-images.githubusercontent.com/26242097/51782315-4b88d300-214c-11e9-9c92-3444c6582a80.png)
 ![enet infer 4](https://user-images.githubusercontent.com/26242097/51782341-a02c4e00-214c-11e9-8566-f2092ddad086.png)
