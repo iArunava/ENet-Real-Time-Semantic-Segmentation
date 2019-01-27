@@ -78,7 +78,7 @@ DeepLabv3+ uses both encoder decoder and spatial pyramid pooling modules.
 ----
 In the last two week I have teamed up with Arunava and we implemented ENet model. 
 During this time we learned a lot and also encountered many difficulties which we overcame.
-At first we went over the article and studied it in depth, we took notes about the article and looked for data sets that could be used by us to train and validate the model that was built. We found that if you are using `plt.imread()` the loaded images are been normalized automatically. In order to make the training efficient we defined our custom data loader.
+At first we went over the article and studied it in depth, we took notes about the article and looked for data sets that could be used to train and validate the model that was built. We found that if you are using `plt.imread()` the loaded images are been normalized automatically. In order to make the training efficient we defined our custom data loader.
 First the results weren't that good and we wanted to make the model more accurate so we also wrote a function which calculates the weights of the classes (as used in the paper). 
 
 #### Results
