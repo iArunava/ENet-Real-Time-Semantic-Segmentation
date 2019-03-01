@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 def test(FLAGS):
     # Check if the pretrained model is available
-    if not FLAGS.model_path.endswith('.pth'):
+    if not FLAGS.m.endswith('.pth'):
         raise RuntimeError('Unknown file passed. Must end with .pth')
     if FLAGS.image_path is None or not os.path.exists(FLAGS.image_path):
         raise RuntimeError('An image file path must be passed')
@@ -17,7 +17,7 @@ def test(FLAGS):
     h = FLAGS.resize_height
     w = FLAGS.resize_width
 
-    checkpoint = torch.load(FLAGS.model_path,  map_location='cpu')
+    checkpoint = torch.load(FLAGS.m,  map_location='cpu')
     
     # Assuming the dataset is camvid
     enet = ENet(12)
