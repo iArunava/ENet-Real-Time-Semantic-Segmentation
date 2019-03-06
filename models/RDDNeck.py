@@ -53,6 +53,8 @@ class RDDNeck(nn.Module):
                                bias = False,
                                dilation = 1)
         
+        self.bnorm1 = nn.BatchNorm2d(self.reduced_depth)
+
         self.prelu1 = activation
         
         self.conv2 = nn.Conv2d(in_channels = self.reduced_depth,
@@ -63,6 +65,8 @@ class RDDNeck(nn.Module):
                                   bias = True,
                                   dilation = self.dilation)
                                   
+        self.bnorm2 = nn.BatchNorm2d(self.reduced_depth)
+
         self.prelu2 = activation
         
         self.conv3 = nn.Conv2d(in_channels = self.reduced_depth,
@@ -75,8 +79,7 @@ class RDDNeck(nn.Module):
         
         self.prelu3 = activation
         
-        self.batchnorm = nn.BatchNorm2d(self.reduced_depth)
-        self.batchnorm2 = nn.BatchNorm2d(self.out_channels)
+        self.bnorm3 = nn.BatchNorm2d(self.out_channels)
         
         
     def forward(self, x):
@@ -86,15 +89,15 @@ class RDDNeck(nn.Module):
         
         # Side Branch
         x = self.conv1(x)
-        x = self.batchnorm(x)
+        x = self.bnorm1(x)
         x = self.prelu1(x)
         
         x = self.conv2(x)
-        x = self.batchnorm(x)
+        x = self.bnorm2(x)
         x = self.prelu2(x)
         
         x = self.conv3(x)
-        x = self.batchnorm2(x)
+        x = self.bnorm3(x)
                 
         x = self.dropout(x)
         
@@ -105,7 +108,7 @@ class RDDNeck(nn.Module):
         if self.in_channels != self.out_channels:
             out_shape = self.out_channels - self.in_channels
             extras = torch.zeros((bs, out_shape, x.shape[2], x.shape[3]))
-            extras = extras.to(device)
+            #extras = extras.to(device)
             x_copy = torch.cat((x_copy, extras), dim = 1)
 
         # Sum of main and side branches

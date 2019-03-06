@@ -32,9 +32,6 @@ def train(FLAGS):
     # Get an instance of the model
     enet = ENet(nc)
     print ('[INFO]Model Instantiated!')
-    
-    # Move the model to cuda if available
-    enet = enet.to(device)
 
     # Define the criterion and the optimizer
     criterion = nn.CrossEntropyLoss(weight=torch.FloatTensor(class_weights).to(device))
@@ -102,6 +99,7 @@ def train(FLAGS):
 
                     inputs, labels = inputs.to(device), labels.to(device)
                     out = enet(inputs)
+                    out = out.data.max(1)[1]
                     
                     loss = criterion(out, labels.long())
 
@@ -122,5 +120,3 @@ def train(FLAGS):
 
         print ('Epoch {}/{}...'.format(e+1, epochs),
                'Total Mean Loss: {:6f}'.format(sum(train_losses) / epochs))
-
-    print ('[INFO]Training Process complete!')
