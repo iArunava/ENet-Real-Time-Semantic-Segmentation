@@ -6,6 +6,8 @@ mobile devices for real time semantic segmentattion. The link to the paper can b
 
 _Note: The model architecture is modified a bit. And loading the pretrained model will give an **error**. Please bear with us while we release the new pretrained model. Also, the notebook is in a **complete working state**. So, you can take a look at the notebook._
 
+_Update: I have made a pretrained model available but it is not trained much. Please wait, while we make the new pretrained model available_
+
 ## How to use?
 
 0. This repository comes in with a handy notebook which you can use with Colab. <br/>
