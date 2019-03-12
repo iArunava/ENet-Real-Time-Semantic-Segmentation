@@ -26,7 +26,7 @@ cd ENet-Real-Time-Semantic-Segmentation/
 
 1. Use this command to train the model
 ```
-python3 init.py --mode train -iptr path/to/train/input/set/ -lptr /path/to/label/set/ --cuda False
+python3 init.py --mode train -iptr path/to/train/input/set/ -lptr /path/to/label/set/
 ```
 
 2. Use this command to test the model
