@@ -4,7 +4,7 @@ A Neural Net Architecture for real time Semantic Segmentation. <br/>
 In this repository we have reproduced the ENet Paper - Which can be used on
 mobile devices for real time semantic segmentattion. The link to the paper can be found here: [ENet](https://arxiv.org/pdf/1606.02147.pdf)
 
-_Note: The model architecture is modified a bit. And loading the pretrained model will give an **error**. Please bear with us while we release the new pretrained model. Also, the notebook is in a **complete working state**. So, you can take a look at the notebook._
+_Note: The model architecture is modified a bit. And loading the pretrained model will give an *error*. Please bear with us while we release the new pretrained model. Also, the notebook is in a *complete working state*. So, you can take a look at the notebook._
 
 ## How to use?
 
