@@ -23,9 +23,8 @@ def test(FLAGS):
     enet = ENet(12)
     enet.load_state_dict(checkpoint['state_dict'])
 
-    tmg_ = np.array(Image.open(FLAGS.image_path))
-    tmg_ = tmg_ / 255
-    tmg_ = cv2.resize(tmg_, (w, h), cv2.INTER_NEAREST)
+    tmg_ = plt.imread(FLAGS.image_path)
+    tmg_ = cv2.resize(tmg_, (h, w), cv2.INTER_NEAREST)
     tmg = torch.tensor(tmg_).unsqueeze(0).float()
     tmg = tmg.transpose(2, 3).transpose(1, 2)
 

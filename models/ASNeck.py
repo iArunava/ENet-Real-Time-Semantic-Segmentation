@@ -32,8 +32,6 @@ class ASNeck(nn.Module):
                                padding = 0,
                                bias = False)
         
-        self.bnorm1 = nn.BatchNorm2d(self.reduced_depth)
-
         self.prelu1 = nn.PReLU()
         
         self.conv21 = nn.Conv2d(in_channels = self.reduced_depth,
@@ -50,8 +48,6 @@ class ASNeck(nn.Module):
                                   padding = (2, 0),
                                   bias = False)
         
-        self.bnorm2 = nn.BatchNorm2d(self.reduced_depth)
-
         self.prelu2 = nn.PReLU()
         
         self.conv3 = nn.Conv2d(in_channels = self.reduced_depth,
@@ -63,7 +59,8 @@ class ASNeck(nn.Module):
         
         self.prelu3 = nn.PReLU()
         
-        self.bnorm3 = nn.BatchNorm2d(self.out_channels)
+        self.batchnorm = nn.BatchNorm2d(self.reduced_depth)
+        self.batchnorm2 = nn.BatchNorm2d(self.out_channels)
         
     def forward(self, x):
         bs = x.size()[0]
@@ -71,18 +68,18 @@ class ASNeck(nn.Module):
         
         # Side Branch
         x = self.conv1(x)
-        x = self.bnorm1(x)
+        x = self.batchnorm(x)
         x = self.prelu1(x)
         
         x = self.conv21(x)
         x = self.conv22(x)
-        x = self.bnorm2(x)
+        x = self.batchnorm(x)
         x = self.prelu2(x)
         
         x = self.conv3(x)
                 
         x = self.dropout(x)
-        x = self.bnorm3(x)
+        x = self.batchnorm2(x)
         
         # Main Branch
         

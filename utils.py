@@ -79,14 +79,13 @@ def loader(training_path, segmented_path, batch_size, h=512, w=512):
         labels = []
         
         for jj in batch_idxs:
-            img = np.array(Image.open(training_path + filenames_t[jj]))
-            img = cv2.resize(img, (w, h), cv2.INTER_NEAREST)
-            img = img / 255
+            img = plt.imread(training_path + filenames_t[jj])
+            img = cv2.resize(img, (h, w), cv2.INTER_NEAREST)
             inputs.append(img)
             
             img = Image.open(segmented_path + filenames_s[jj])
             img = np.array(img)
-            img = cv2.resize(img, (w, h), cv2.INTER_NEAREST)
+            img = cv2.resize(img, (h, w), cv2.INTER_NEAREST)
             labels.append(img)
          
         inputs = np.stack(inputs, axis=2)

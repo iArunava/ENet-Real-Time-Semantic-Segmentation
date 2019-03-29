@@ -32,7 +32,6 @@ class UBNeck(nn.Module):
                                padding = 0,
                                bias = False)
         
-        self.bnorm1 = nn.BatchNorm2d(self.reduced_depth)
         
         self.prelu1 = activation
         
@@ -44,8 +43,6 @@ class UBNeck(nn.Module):
                                   output_padding = 1,
                                   bias = False)
         
-        self.bnorm2 = nn.BatchNorm2d(self.reduced_depth)
-
         self.prelu2 = activation
         
         self.convt3 = nn.ConvTranspose2d(in_channels = self.reduced_depth,
@@ -56,22 +53,23 @@ class UBNeck(nn.Module):
         
         self.prelu3 = activation
         
-        self.bnorm3 = nn.BatchNorm2d(self.out_channels)
+        self.batchnorm = nn.BatchNorm2d(self.reduced_depth)
+        self.batchnorm2 = nn.BatchNorm2d(self.out_channels)
         
     def forward(self, x, indices):
         x_copy = x
         
         # Side Branch
         x = self.convt1(x)
-        x = self.bnorm1(x)
+        x = self.batchnorm(x)
         x = self.prelu1(x)
         
         x = self.convt2(x)
-        x = self.bnorm2(x)
+        x = self.batchnorm(x)
         x = self.prelu2(x)
         
         x = self.convt3(x)
-        x = self.bnorm3(x)
+        x = self.batchnorm2(x)
         
         x = self.dropout(x)
         
