@@ -17,7 +17,7 @@ def test(FLAGS):
     h = FLAGS.resize_height
     w = FLAGS.resize_width
 
-    checkpoint = torch.load(FLAGS.m,  map_location='cpu')
+    checkpoint = torch.load(FLAGS.m,  map_location=FLAGS.cuda)
     
     # Assuming the dataset is camvid
     enet = ENet(12)
