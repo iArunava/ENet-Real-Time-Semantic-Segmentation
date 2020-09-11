@@ -59,8 +59,9 @@ class ASNeck(nn.Module):
         
         self.prelu3 = nn.PReLU()
         
-        self.batchnorm = nn.BatchNorm2d(self.reduced_depth)
-        self.batchnorm2 = nn.BatchNorm2d(self.out_channels)
+        self.batchnorm1 = nn.BatchNorm2d(self.reduced_depth)
+        self.batchnorm2 = nn.BatchNorm2d(self.reduced_depth)
+        self.batchnorm3 = nn.BatchNorm2d(self.out_channels)
         
     def forward(self, x):
         bs = x.size()[0]
@@ -68,18 +69,18 @@ class ASNeck(nn.Module):
         
         # Side Branch
         x = self.conv1(x)
-        x = self.batchnorm(x)
+        x = self.batchnorm1(x)
         x = self.prelu1(x)
         
         x = self.conv21(x)
         x = self.conv22(x)
-        x = self.batchnorm(x)
+        x = self.batchnorm2(x)
         x = self.prelu2(x)
         
         x = self.conv3(x)
                 
         x = self.dropout(x)
-        x = self.batchnorm2(x)
+        x = self.batchnorm3(x)
         
         # Main Branch
         
