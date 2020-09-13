@@ -43,12 +43,6 @@ python3 init.py --help
 ![enet infer 5](https://user-images.githubusercontent.com/26242097/51782353-c3ef9400-214c-11e9-8c66-276795c83f08.png)
 ![enet infer 2](https://user-images.githubusercontent.com/26242097/51782324-6b1ffb80-214c-11e9-9f92-741954699f4d.png)
 
-## Pretrained models
-
-We plan to open source more pretrained models which are better.<br/>
-For now, we have only open sourced one pretrained model, which is trained on CamVid dataset.<br/>
-Find it here: [Pretrained ENet on CamVid](https://github.com/iArunava/ENet-Real-Time-Semantic-Segmentation/blob/master/datasets/CamVid/ckpt-enet.pth)
-
 ## References
 1. A. Paszke, A. Chaurasia, S. Kim, and E. Culurciello.
 Enet: A deep neural network architecture
