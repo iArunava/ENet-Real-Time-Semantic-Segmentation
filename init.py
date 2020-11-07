@@ -84,8 +84,8 @@ if __name__ == '__main__':
 
     parser.add_argument('-nc', '--num-classes',
                         type=int,
-                        default=102,
-                        help='The number of epochs')
+                        default=12,
+                        help='Number of unique classes')
 
     parser.add_argument('-se', '--save-every',
                         type=int,

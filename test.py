@@ -7,6 +7,7 @@ import os
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 
+
 def test(FLAGS):
     # Check if the pretrained model is available
     if not FLAGS.m.endswith('.pth'):
@@ -20,7 +21,7 @@ def test(FLAGS):
     checkpoint = torch.load(FLAGS.m,  map_location=FLAGS.cuda)
     
     # Assuming the dataset is camvid
-    enet = ENet(12)
+    enet = ENet(FLAGS.num_classes)
     enet.load_state_dict(checkpoint['state_dict'])
 
     tmg_ = plt.imread(FLAGS.image_path)
