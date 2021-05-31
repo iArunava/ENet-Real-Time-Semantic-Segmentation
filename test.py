@@ -17,17 +17,20 @@ def test(FLAGS):
     
     h = FLAGS.resize_height
     w = FLAGS.resize_width
+    device =  FLAGS.cuda
 
     checkpoint = torch.load(FLAGS.m,  map_location=FLAGS.cuda)
     
     # Assuming the dataset is camvid
     enet = ENet(FLAGS.num_classes)
+    enet = enet.to(device)   
     enet.load_state_dict(checkpoint['state_dict'])
 
     tmg_ = plt.imread(FLAGS.image_path)
     tmg_ = cv2.resize(tmg_, (h, w), cv2.INTER_NEAREST)
     tmg = torch.tensor(tmg_).unsqueeze(0).float()
     tmg = tmg.transpose(2, 3).transpose(1, 2)
+    tmg = tmg.to(device)
 
     with torch.no_grad():
         out1 = enet(tmg.float()).squeeze(0)
